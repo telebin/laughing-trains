@@ -1,5 +1,6 @@
 #!/bin/ruby
 require_relative 'entry.rb'
+
 def log(msg)
   STDERR.puts msg
 end
