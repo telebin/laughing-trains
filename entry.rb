@@ -1,3 +1,5 @@
+require 'time'
+
 class Entry
   class Record
     attr_reader :time, :station
@@ -8,19 +10,19 @@ class Entry
     end
 
     def to_s
-      "#{@station} @ #{@time}"
+      "#{@station} @ #{@time.strftime '%H:%M'}"
     end
   end
 
-  attr_reader :to, :from, :time
+  attr_reader :destination, :source, :travel_seconds
 
   def initialize(start, depart, stop, arriv, time)
-    @from = Record.new start, depart
-    @to = Record.new stop, arriv
-    @time = time
+    @source = Record.new start, (Time.parse depart)
+    @destination = Record.new stop, (Time.parse arriv)
+    @travel_seconds = time.split(/\D/).map(&:to_i).reduce {|a, v| a * 60 + v} * 60
   end
 
   def to_s
-    "#{@from} -> #{@to} (in #{@time}) "
+    "#{@source} -> #{@destination} (in #{@travel_seconds}) "
   end
 end
