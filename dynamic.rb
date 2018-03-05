@@ -1,9 +1,6 @@
-require_relative 'entry_mapper.rb'
-require_relative 'query.rb'
-
-def log(msg)
-  STDERR.puts msg.to_s
-end
+require_relative 'entry_mapper'
+require_relative 'query'
+require_relative 'log'
 
 class Integer
   def minutes

@@ -1,4 +1,5 @@
 require 'net/http'
+require_relative 'log'
 
 class PkpQuery
   DAYS = %w(Nd Pn Wt Śr Cz Pt So).freeze
@@ -13,6 +14,7 @@ class PkpQuery
         REQ0JourneyStopsZ0A: 1, # required
         REQ0JourneyProduct_prod_section_0_3: 1 # only regios
     }
+    log "Initialized #{self.class} (proxy <#{@proxy}>, uri <#{@uri}>)"
   end
 
   def from(loc_id)
@@ -33,6 +35,7 @@ class PkpQuery
 
   def get
     Net::HTTP.new(@uri.host, @uri.port, @proxy.host, @proxy.port).start do |http|
+      log "Getting <#{@uri.path}?#{URI.encode_www_form @parameters}>"
       http.get "#{@uri.path}?#{URI.encode_www_form @parameters}"
     end.body
   end

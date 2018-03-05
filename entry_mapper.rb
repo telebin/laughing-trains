@@ -1,5 +1,5 @@
 require 'nokogiri'
-require_relative 'entry.rb'
+require_relative 'entry'
 
 class EntryMapper
   def initialize(html)
