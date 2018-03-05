@@ -4,6 +4,7 @@ class PkpQuery
   DAYS = %w(Nd Pn Wt Śr Cz Pt So).freeze
 
   def initialize
+    @proxy = URI(ENV['http_proxy'] || ENV['HTTP_PROXY'] || '')
     @uri = URI('http://rozklad-pkp.pl/pl/tp')
     @parameters = {
         queryPageDisplayed: 'yes', # required
@@ -31,7 +32,8 @@ class PkpQuery
   end
 
   def get
-    @uri.query = URI.encode_www_form @parameters
-    Net::HTTP.get @uri
+    Net::HTTP.new(@uri.host, @uri.port, @proxy.host, @proxy.port).start do |http|
+      http.get "#{@uri.path}?#{URI.encode_www_form @parameters}"
+    end.body
   end
 end
