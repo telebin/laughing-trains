@@ -17,7 +17,7 @@ LOCATIONS = {
     zach: 5102597
 }.freeze
 
-mik_wro_query = PkpQuery.new.from(LOCATIONS[:mik]).to(LOCATIONS[:wro]).at(Time.new + 30.minutes)
+mik_wro_query = PkpQuery.new.from(LOCATIONS[:mik]).to(LOCATIONS[:wro]).at(Time.now + 30.minutes)
 log 'Getting mik->wro'
 mik_wro_trains = EntryMapper.new(mik_wro_query.get).map_rows
 
