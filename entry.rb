@@ -23,6 +23,6 @@ class Entry
   end
 
   def to_s
-    "#{@source} -> #{@destination} (in #{@travel_seconds / 60**2}:#{@travel_seconds % 60**2 / 60})"
+    "#{@source} -> #{@destination} (in #{'%02d' % (@travel_seconds / 60 ** 2)}:#{'%02d' % (@travel_seconds % 60 ** 2 / 60)})"
   end
 end
