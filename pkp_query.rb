@@ -6,7 +6,7 @@ class PkpQuery
 
   def initialize
     @proxy = URI(ENV['http_proxy'] || ENV['HTTP_PROXY'] || '')
-    @uri = URI('http://rozklad-pkp.pl')
+    @uri = URI('http://rozklad-pkp.pl/pl/tp')
     @parameters = {
         queryPageDisplayed: 'yes', # required
         start: 'Wyszukaj połączenie', # required
