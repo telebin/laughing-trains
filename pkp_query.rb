@@ -34,9 +34,11 @@ class PkpQuery
   end
 
   def get
-    Net::HTTP.new(@uri.host, @uri.port, @proxy.host, @proxy.port).start do |http|
+    res = Net::HTTP.new(@uri.host, @uri.port, @proxy.host, @proxy.port).start do |http|
       log "Getting <#{@uri.path}?#{URI.encode_www_form @parameters}>"
       http.get "#{@uri.path}?#{URI.encode_www_form @parameters}"
-    end.body
+    end
+    log "Got result: #{res.inspect}, body length #{res.body.length}"
+    res.body
   end
 end
