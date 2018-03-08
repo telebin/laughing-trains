@@ -6,6 +6,7 @@ class PkpQueryMock < PkpQuery
 
   def initialize
     @times = []
+    @parameters = {}
   end
 
   def at(time)
