@@ -1,4 +1,4 @@
-require_relative 'pkp_query'
+require_relative '../pkp_query'
 require 'time'
 
 class PkpQueryMock < PkpQuery
@@ -16,9 +16,9 @@ class PkpQueryMock < PkpQuery
 
   def get
     if times.last < Time.parse('16:45')
-      File.open('data1.html') {|f| f.readlines.join}
+      File.open(File.dirname(__FILE__) + '/data1.html') {|f| f.readlines.join}
     else
-      File.open('data2.html') {|f| f.readlines.join}
+      File.open(File.dirname(__FILE__) + '/data2.html') {|f| f.readlines.join}
     end
   end
 end

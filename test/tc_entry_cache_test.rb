@@ -1,5 +1,5 @@
 require_relative 'pkp_query_mock'
-require_relative 'entry_cache'
+require_relative '../entry_cache'
 require 'time'
 require 'test/unit'
 
