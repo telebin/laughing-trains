@@ -1,10 +1,16 @@
-require_relative 'entry_mapper'
+require_relative 'entry_cache'
 require_relative 'pkp_query'
 require_relative 'log'
+require_relative 'notification'
+require_relative 'gir_notification_executor'
 
 class Integer
   def minutes
     self * 60
+  end
+
+  def hours
+    self * 60.minutes
   end
 end
 
@@ -15,18 +21,22 @@ LOCATIONS = {
 }.freeze
 
 if ARGV.count.zero?
-  mik_wro_query = PkpQuery.new.from(LOCATIONS[:mik]).to(LOCATIONS[:wro]).at(Time.now + 30.minutes)
-  log 'Getting mik->wro'
-  mik_wro_trains = EntryMapper.new(mik_wro_query.get).map_rows
+  notifier = GirNotificationExecutor.new
+  mik_wro_cache = EntryCache.new PkpQuery.new.from(LOCATIONS[:mik]).to(LOCATIONS[:wro])
+  wro_zach_cache = EntryCache.new PkpQuery.new.from(LOCATIONS[:wro]).to(LOCATIONS[:zach])
 
-  next_train_time = mik_wro_trains.first.destination.time + 10.minutes
-  wro_zach_query = PkpQuery.new.from(LOCATIONS[:wro]).to(LOCATIONS[:zach]).at(next_train_time)
-  log 'Getting wro->zach'
-  wro_zach_trains = EntryMapper.new(wro_zach_query.get).map_rows
+  while true
+    # TODO add support for closer trains (i.e. 10 min from now - instant notification?)
+    now = Time.now
+    soonest_conn = mik_wro_cache.get_conn_after(now + 30.minutes)
+    change_conn = wro_zach_cache.get_conn_after(soonest_conn.destination.time + 10.minutes)
 
-  puts mik_wro_trains.map(&:to_s)
-  puts 'and then'
-  puts wro_zach_trains.map(&:to_s)
+    log "Now waiting #{soonest_conn.source.time - (now + 30.minutes)}s with notification..."
+    sleep(soonest_conn.source.time - (now + 30.minutes))
+    notification = Notification.new 'Interesting trainz', soonest_conn, change_conn
+    log 'Executing notification'
+    notifier.execute notification
+  end
 else
   require 'time'
   SOURCE_STATION_ID = LOCATIONS[ARGV[0].to_s.to_sym] || LOCATIONS[:zach]
