@@ -15,7 +15,7 @@ class Daemon
       # TODO add support for closer trains (i.e. 10 min from now - instant notification?)
       now = Time.now
       soonest_conn = @mik_wro_cache.get_conn_after(now + 30.minutes)
-      change_conn = @wro_zach_cache.get_conn_after(soonest_conn.destination.time + 10.minutes)
+      change_conn = @wro_zach_cache.get_conn_after(soonest_conn.destination.time + 6.minutes)
 
       log "Now waiting #{soonest_conn.source.time - (now + 30.minutes)}s with notification..."
       sleep(soonest_conn.source.time - (now + 30.minutes))
