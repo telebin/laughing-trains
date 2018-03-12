@@ -20,7 +20,11 @@ LOCATIONS = {
 }.freeze
 
 if ARGV.count.zero?
-  Daemon.new.run
+  begin
+    Daemon.new.run
+  rescue => e
+    log "Error just appeared from nowhere! It is as follows: #{e}"
+  end
 else
   require 'time'
   SOURCE_STATION_ID = LOCATIONS[ARGV[0].to_s.to_sym] || LOCATIONS[:zach]
