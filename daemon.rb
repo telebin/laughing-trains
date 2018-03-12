@@ -1,5 +1,6 @@
 require_relative 'pkp_query'
 require_relative 'log'
+require_relative 'entry_cache'
 require_relative 'notification'
 require_relative 'gir_notification_executor'
 
