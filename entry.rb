@@ -2,15 +2,15 @@ require 'time'
 
 class Entry
   class Record
-    attr_reader :time, :station
+    attr_reader :time, :name
 
     def initialize(station, time)
-      @station = station
+      @name = station
       @time = time
     end
 
     def to_s
-      "#{@station} @ #{@time.strftime '%H:%M'}"
+      "#{@name} @ #{@time.strftime '%H:%M'}"
     end
   end
 
@@ -23,6 +23,10 @@ class Entry
   end
 
   def to_s
-    "#{@source} -(#{@travel_seconds / 60 ** 2}:#{'%02d' % (@travel_seconds % 60 ** 2 / 60)})> #{@destination}"
+    "#{@source} -(#{travel_time})> #{@destination}"
+  end
+
+  def travel_time
+    "#{@travel_seconds / 60 ** 2}:#{'%02d' % (@travel_seconds % 60 ** 2 / 60)}"
   end
 end
