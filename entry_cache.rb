@@ -13,7 +13,7 @@ class EntryCache
       log "Taking closest entry from cache: #{closest_entry}"
       return closest_entry
     end
-    fill_cache(time)
+    fill_cache(time + 1.minutes)
     find_entry_closest_to(time)
   end
 
