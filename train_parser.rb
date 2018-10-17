@@ -7,7 +7,8 @@ require_relative 'daemon'
 LOCATIONS = {
     mik: 5104134,
     wro: 5100069,
-    zach: 5102597
+    zach: 5102597,
+    cze: 5100697
 }.freeze
 
 if ARGV.count.zero?
