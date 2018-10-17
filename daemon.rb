@@ -1,3 +1,4 @@
+require_relative 'fix_integer'
 require_relative 'pkp_query'
 require_relative 'log'
 require_relative 'entry_cache'

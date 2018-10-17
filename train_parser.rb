@@ -1,17 +1,8 @@
+require_relative 'fix_integer'
 require_relative 'entry_mapper'
 require_relative 'pkp_query'
 require_relative 'log'
 require_relative 'daemon'
-
-class Integer
-  def minutes
-    self * 60
-  end
-
-  def hours
-    self * 60.minutes
-  end
-end
 
 LOCATIONS = {
     mik: 5104134,
