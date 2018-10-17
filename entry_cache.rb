@@ -9,10 +9,8 @@ class EntryCache
 
   def get_conn_after(time)
     closest_entry = find_entry_closest_to(time)
-    if closest_entry
-      log "Taking closest entry from cache: #{closest_entry}"
-      return closest_entry
-    end
+    return closest_entry if closest_entry
+
     fill_cache(time + 1.minutes)
     find_entry_closest_to(time)
   end
@@ -25,6 +23,8 @@ class EntryCache
 
   def find_entry_closest_to(time)
     log 'Searching for closest entry in cache'
-    @entries.select {|e| e.source.time > time}.min_by {|e| e.source.time}
+    entry = @entries.select {|e| e.source.time > time}.min_by {|e| e.source.time}
+    log "Found #{entry}"
+    entry
   end
 end
