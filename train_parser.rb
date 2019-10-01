@@ -11,6 +11,7 @@ LOCATIONS = {
     cze: 5100697
 }.freeze
 
+# TODO Add parameters check (locations existance, time parseability)
 if ARGV.count.zero?
   Daemon.new.run
 else

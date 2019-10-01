@@ -18,7 +18,7 @@ class Daemon
 
   def run
     while true
-      # TODO add support for closer trains (i.e. 10 min from now - instant notification?)
+      # TODO add support for sooner trains (i.e. 10 min from now - instant notification?)
       now = Time.now
       delayed_time = now + MINIMAL_DELAY
       soonest_conn = @mik_cze_cache.get_conn_after(delayed_time)
