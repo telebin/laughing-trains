@@ -12,6 +12,7 @@ LOCATIONS = {
 }.freeze
 
 # TODO Add parameters check (locations existance, time parseability)
+# TODO trap for SIGINT - stop Gir thread?
 if ARGV.count.zero?
   Daemon.new.run
 else
